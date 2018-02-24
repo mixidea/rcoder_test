@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+declare var MediaRecorder: any;
+
 
 @Component({
   selector: 'app-root',
@@ -7,81 +9,81 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppComponent implements OnInit {
   title = 'app';
+  mediaRecorder;
 
-  ngOnInit(){
+  ngOnInit() {
 
-    var mediaRecorder;
     if (navigator.mediaDevices) {
       console.log('getUserMedia supported.');
-  
-      var constraints = { audio: true };
-      var chunks = [];
-  
+
+      const constraints = { audio: true };
+      let chunks = [];
+
       navigator.mediaDevices.getUserMedia(constraints)
-      .then(function(stream) {
-  
-        mediaRecorder = new MediaRecorder(stream);
-        // visualize(stream);
-  
-        // record.onclick = function() {
-        //   mediaRecorder.start();
-        //   console.log(mediaRecorder.state);
-        //   console.log("recorder started");
-        //   record.style.background = "red";
-        //   record.style.color = "black";
-        // }
-  
-        // stop.onclick = function() {
-        //   mediaRecorder.stop();
-        //   console.log(mediaRecorder.state);
-        //   console.log("recorder stopped");
-        //   record.style.background = "";
-        //   record.style.color = "";
-        // }
-        mediaRecorder.onstart = function(e) {
-          console.log("オンスタート");
-        }
-        mediaRecorder.onstop = function(e) {
-          console.log("data available after MediaRecorder.stop() called.");
-  
-          var clipName = prompt('Enter a name for your sound clip');
-  
-          var clipContainer = document.createElement('article');
-          var clipLabel = document.createElement('p');
-          var audio = document.createElement('audio');
-          var deleteButton = document.createElement('button');
-  
-          clipContainer.classList.add('clip');
-          audio.setAttribute('controls', '');
-          deleteButton.innerHTML = "Delete";
-          clipLabel.innerHTML = clipName;
-  
-          clipContainer.appendChild(audio);
-          clipContainer.appendChild(clipLabel);
-          clipContainer.appendChild(deleteButton);
-          var soundClips = document.getElementById("audio_container");
-          soundClips.appendChild(clipContainer);
-  
-          audio.controls = true;
-          var blob = new Blob(chunks, { 'type' : 'audio/ogg; codecs=opus' });
-          chunks = [];
-          var audioURL = URL.createObjectURL(blob);
-          audio.src = audioURL;
-          console.log("recorder stopped");
-  
-          deleteButton.onclick = function(e) {
-            evtTgt = e.target;
-            evtTgt.parentNode.parentNode.removeChild(evtTgt.parentNode);
-          }
-        }
-  
-        mediaRecorder.ondataavailable = function(e) {
-          chunks.push(e.data);
-        }
-      })
-      .catch(function(err) {
-        console.log('The following error occurred: ' + err);
-      })
+        .then( (stream) => {
+
+          this.mediaRecorder = new MediaRecorder(stream);
+          // visualize(stream);
+
+          // record.onclick = function() {
+          //   mediaRecorder.start();
+          //   console.log(mediaRecorder.state);
+          //   console.log('recorder started');
+          //   record.style.background = 'red';
+          //   record.style.color = 'black';
+          // }
+
+          // stop.onclick = function() {
+          //   mediaRecorder.stop();
+          //   console.log(mediaRecorder.state);
+          //   console.log('recorder stopped');
+          //   record.style.background = '';
+          //   record.style.color = '';
+          // }
+          this.mediaRecorder.onstart = function (e) {
+            console.log('オンスタート');
+          };
+          this.mediaRecorder.onstop = function (e) {
+            console.log('data available after MediaRecorder.stop() called.');
+
+            const clipName = prompt('Enter a name for your sound clip');
+
+            const clipContainer = document.createElement('article');
+            const clipLabel = document.createElement('p');
+            const audio = document.createElement('audio');
+            const deleteButton = document.createElement('button');
+
+            clipContainer.classList.add('clip');
+            audio.setAttribute('controls', '');
+            deleteButton.innerHTML = 'Delete';
+            clipLabel.innerHTML = clipName;
+
+            clipContainer.appendChild(audio);
+            clipContainer.appendChild(clipLabel);
+            clipContainer.appendChild(deleteButton);
+            const soundClips = document.getElementById('audio_container');
+            soundClips.appendChild(clipContainer);
+
+            audio.controls = true;
+            const blob = new Blob(chunks, { 'type': 'audio/ogg; codecs=opus' });
+            chunks = [];
+            const audioURL = URL.createObjectURL(blob);
+            audio.src = audioURL;
+            console.log('recorder stopped');
+
+            deleteButton.onclick = function (e: any) {
+              const evtTgt = e.target;
+              evtTgt.parentNode.parentNode.removeChild(evtTgt.parentNode);
+            };
+          };
+
+          this.mediaRecorder.ondataavailable = function (e) {
+            chunks.push(e.data);
+          };
+        })
+        .catch(function (err) {
+          console.log('The following error occurred: ' + err);
+        });
     }
 
 
@@ -90,19 +92,19 @@ export class AppComponent implements OnInit {
 
   }
 
-  aaa(){
-    mediaRecorder.start();
-    console.log(mediaRecorder.state);
-    console.log("recorder started");
-    record.style.background = "red";
-    record.style.color = "black";
+  aaa() {
+    console.log('recorder started');
+    this.mediaRecorder.start();
+    console.log(this.mediaRecorder.state);
+    //record.style.background = 'red';
+    //record.style.color = 'black';
   }
-  bbb(){
-    mediaRecorder.stop();
-    console.log(mediaRecorder.state);
-    console.log("recorder stopped");
-    record.style.background = "";
-    record.style.color = "";
+  bbb() {
+    this.mediaRecorder.stop();
+    console.log(this.mediaRecorder.state);
+    console.log('recorder stopped');
+    //record.style.background = '';
+    //record.style.color = '';
   }
 
 
