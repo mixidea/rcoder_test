@@ -1,6 +1,6 @@
 <!--The content below is only a placeholder and can be replaced.-->
   <p>
-    <input type="button" id="record" value="スタート" (click)="aaa()">
+    <input type="button" id="record" value="スタート" (click)="aaa()" [ngClass]="{'record': IsRecoding}">
   </p>
   <p>
     <input type="button" id="stop" value="ストップ" (click)="bbb()">

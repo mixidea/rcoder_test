@@ -5,11 +5,16 @@ declare var MediaRecorder: any;
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.sass']
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
   title = 'app';
   mediaRecorder;
+
+IsRecoding = false;
+
+
+
 
   ngOnInit() {
 
@@ -96,19 +101,13 @@ export class AppComponent implements OnInit {
     console.log('recorder started');
     this.mediaRecorder.start();
     console.log(this.mediaRecorder.state);
-    //record.style.background = 'red';
-    //record.style.color = 'black';
+    this.IsRecoding = true;
   }
   bbb() {
     this.mediaRecorder.stop();
     console.log(this.mediaRecorder.state);
     console.log('recorder stopped');
-    //record.style.background = '';
-    //record.style.color = '';
+    this.IsRecoding = false;
   }
-
-
-
-
 
 }
